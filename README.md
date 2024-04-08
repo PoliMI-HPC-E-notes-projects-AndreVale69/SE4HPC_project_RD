@@ -17,7 +17,7 @@ The exercise consists in analyzing the problem presented in the following sectio
 
 ### The problem
 
-Two urgent global concerns are environmental sustainability and climate change; because of air pollution and greenhouse gas emission, transportation - especially urban commuting - contributes to worsening those issues.
+Two urgent global concerns are environmental sustainability and climate change; because of air pollution and greenhouse gas emissions, transportation - especially urban commuting - contributes to worsening those issues.
 
 Even today, urban areas are characterized by a heavy reliance on personal vehicles, which are seen as the most comfortable and efficient way of commuting, despite several studies showing that better alternatives exist in most cases.
 
