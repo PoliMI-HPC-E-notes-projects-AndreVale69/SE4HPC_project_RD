@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{Project title to invent - v0.0.1}
+    \title{Project title to invent - v0.1.0}
     \date{Last update: \today}
     \maketitle
 
@@ -166,9 +166,22 @@
 
     \section{Requirement analysis}
 
-    \newpage
-
     \subsection{Relevant human and non-human actors}
+
+    The only \emph{human actor} is the citizen:
+    \begin{itemize}
+        \item \textbf{Citizen}. A user who uses the mobile application and enters the origin and destination of his journey. As the problem says, it can also add some constraints to the research.
+    \end{itemize}
+    Instead, there are several \emph{non-human actors} that allow the user to search for some specific services or even a public transport timetable:
+    \begin{itemize}
+        \item \textbf{Sensor}. An electronic device installed on public transport vehicles that provides information about their occupancy.
+
+        \item \textbf{PTT Server}. A Public Transit Timetable Server identifies the public transport company's server. The application makes some queries to this server to find out which public transport line is available at the time specified by the citizen actor.
+        
+        \item \textbf{BRS Server}. A Bike-Ride-Sharing Server identifies the server that the mobile application can query to get the information requested by the citizen actor. The BRS Server actor is as abstract as possible, because we want to be able to add as many services as we want. 
+        
+        For example, a BRS server could be the \href{https://www.blablacar.co.uk/}{BlaBlaCar} site that the application queries to know if there is a car available for rent.
+    \end{itemize}
 
     \newpage
 
