@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v0.3.1}
+    \title{EcoRoute - v0.4.0}
     \date{Last update: \today}
     \maketitle
 
@@ -288,10 +288,37 @@
     \newpage
 
     \subsection{Requirements}
-
+    
     \subsubsection{Functional requirements}
 
+    The functional requirements describe the interactions between the system and its environment. Then our application provides the following requirements:
+    \begin{itemize}
+        \item The mobile application will allow users (citizens):
+        \begin{itemize}
+            \item To find an environmentally friendly route.
+
+            \item To add any constraints.
+            
+            \item To view all or one of the Public Transport Occupancy, Public Transit Timetables, Bike/Ride Sharing information in the final result.
+        \end{itemize}
+
+        \item The system should guarantee that the environmentally friendly route computed is the most eco-friendly and give preference to combinations of different modes of transport.
+    \end{itemize}
+
     \subsubsection{Non-functional requirements}
+
+    The non-functional requirements specify or constrain characteristics of the system as a whole. Then our application provides the following requirements:
+    \begin{itemize}
+        \item The EcoRoute application must be available to all users (citizens) 24 hours a day, 7 days a week, including public holidays.
+        
+
+        \item Downtime during normal working hours should not exceed 1 minute, as this is when the application is most used by citizens.
+        
+        Holiday downtime should not exceed 5 minutes.
+
+        
+        \item The algorithm time to calculate the best environmentally friendly routes should not exceed 10 seconds.
+    \end{itemize}
 
     \newpage
 
