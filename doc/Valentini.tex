@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v0.2.0}
+    \title{EcoRoute - v0.2.1}
     \date{Last update: \today}
     \maketitle
 
@@ -199,6 +199,7 @@
         \centering
         \includegraphics[width=\textwidth]{img/use-cases.pdf}
         \caption{Use case diagram for the EcoRoute App.}
+        \label{fig: use case diagram}
     \end{figure}
 
     \noindent
@@ -208,18 +209,66 @@
     \end{center}
 
     \noindent
-    The use cases identified are 5:
+    As we can see from the use case diagram (Figure~\ref{fig: use case diagram}), there are 5 use cases identified. On page~\pageref{Use Case - Research Trip}, in Table~\ref{Use Case - Research Trip}, we give an exhaustive explanation of the Research Trip use case. However, in the following list, we talk about the other use cases:
     \begin{itemize}
-        \item \textbf{Research Trip}
+        \item \textbf{Show Public Transport Occupancy}. The Public Transport Occupancy is a crucial resource gathered by the EcoRoute (app) from the sensors deployed on the Public Transport and used to avoid bottlenecks at peak times. 
+        
+        We have included this use case in the Research Trip use case.
 
-        \item \textbf{Add Constraints}
+        \newpage
 
-        \item \textbf{Show Public Transport Occupancy}
+        \item \textbf{Show Public Transit Timetables}. The Public Transit Timetables are essential for finding the correct public transport route for the user. The app also uses them to find (and combine) the most environmentally friendly route. 
+        
+        We have included this use case in the Research Trip use case.
 
-        \item \textbf{Show Public Transit Timetables}
 
-        \item \textbf{Show Bike/Ride Sharing}
+        \item \textbf{Show Bike/Ride Sharing}. Bike/Ride Sharing is mainly used to suggest more ecological means of transport to the user, such as bicycles. The app also uses it to combine with public transport. We have included this use case in the Research Trip use case.
+
+
+        \item \textbf{Add Constraints}. The user can add constraints, but this choice is not required by the system (as the project problem says). So the user can decide if to impose some limitations or not. We have extended the Research Trip use case with this use case.
     \end{itemize}
+    
+    \begin{table}[!htp]
+        \centering
+        \begin{tabular}{@{} l p{23em} @{}}
+            \toprule
+            \multicolumn{2}{c}{Use Case: \textbf{Research Trip}} \\ 
+            \midrule
+            %%%
+            Primary Actor 
+            & 
+            Citizen. \\ \\
+            %%%
+            Supporting Actor 
+            & 
+            ~~\llap{\textbullet}~~ Sensor;
+
+            ~~\llap{\textbullet}~~ PTT Server (Public Transit Timetable);
+
+            ~~\llap{\textbullet}~~ BRS Server (Bike-Ride-Sharing). \\ \\
+            %%%
+            Description 
+            &
+            A citizen, the application user, inserts the information about their trip. The information required is the origin and the destination. The constraints can be optional (Add Constraints use case extend Research Trip). 
+            
+            Once the user does the research (e.g., by clicking the \dquotes{research} button), three use cases extend the Research Trip: the Sensor, the PTT Server, and the BRS Server participate in the research made by the user, showing the different ecological choices. 
+            
+            The user sees the final result, but the app makes the low-level requests, calculations, and others. \\ \\
+            %%%
+            Data 
+            &
+            Origin, destination, (optional) constraints, environmentally friendly routes. \\ \\
+            %%%
+            Comments 
+            &
+            The citizen must enter the origin and destination within the urban area. \\
+            \bottomrule
+        \end{tabular}
+        \caption{Detailed use case explanation - Research Trip.}
+        \label{Use Case - Research Trip}
+    \end{table}
+
+    \newpage
 
     \subsection{Domain assumptions}
 
