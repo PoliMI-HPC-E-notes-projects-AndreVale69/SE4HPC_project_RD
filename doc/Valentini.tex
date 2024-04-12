@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v0.4.0}
+    \title{EcoRoute - v0.5.0}
     \date{Last update: \today}
     \maketitle
 
@@ -326,7 +326,43 @@
 
     \subsection{General description of the architecture}
 
+    The architecture chosen for the EcoRoute project is Client-Server, but with the worker pooling (\href{https://www.nginx.com/}{NGINX web server}). The reason for this choice is discussed in section~\ref{subsection: Critical points and design decisions} on page~\pageref{subsection: Critical points and design decisions}.
+
+    \begin{figure}[!htp]
+        \centering
+        \includegraphics[width=\textwidth]{img/component-diagram.pdf}
+        \caption{Component diagram for the EcoRoute App.}
+        \label{fig: component diagram}
+    \end{figure}
+    
+    \noindent
+    Before we go into details, let us assume that sensors are deployed on public transport means and that they publish updated data on occupancy rates at each stop. The data are saved into a HPC database, such as \href{https://www.scylladb.com/}{ScyllaDB}. We have analyzed this assumption again in the section~\ref{subsection: Critical points and design decisions} on page~\pageref{subsection: Critical points and design decisions}.
+
+    \highspace
+    The following list examines each component of the component diagram (Figure~\ref{fig: component diagram}):
+    \begin{itemize}
+        \item \textbf{Client}
+
+        \item \textbf{Server}
+
+        \item \textbf{Dispatcher}
+
+        \item \textbf{Workers and Workers Pool}
+
+        \item \textbf{Sensor (ScyllaDB)}
+
+        \item \textbf{PTT Server}
+        
+        \item \textbf{BRS Server}
+
+        \item \textbf{FPGA}
+    \end{itemize}    
+
+    \newpage
+
     \subsection{Sequence diagrams}
 
-    \subsection{Critical points and design decisions}
+    \newpage
+
+    \subsection{Critical points and design decisions}\label{subsection: Critical points and design decisions}
 \end{document}
