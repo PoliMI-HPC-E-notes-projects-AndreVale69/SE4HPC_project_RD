@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v0.5.2}
+    \title{EcoRoute - v0.5.3}
     \date{Last update: \today}
     \maketitle
 
@@ -356,21 +356,23 @@
     \highspace
     The following list examines each component of the component diagram (Figure~\ref{fig: component diagram}):
     \begin{itemize}
-        \item \textbf{Client}
+        \item \textbf{Client}. The module represents the application installed on the stakeholder's (citizen's) device. The aim of the module is to send requests to the server to calculate the route requested by the citizen.
 
-        \item \textbf{Server}
+        \item \textbf{Server}. The server module is the NGINX web server (worker pooling technology). It is installed on the server side of the application and can be considered as the core of the architecture. In fact, its aim is to manage the high traffic of requested and instantiated resources. It also aims to send asynchronous requests to the different servers to obtain data about the services requested by the client. Finally, it can request the calculation of the route by interrogating the FPGA module.
 
-        \item \textbf{Dispatcher}
+        \item \textbf{Dispatcher}. This is the module that takes the request from the client and instantiates the resource. It can enqueue a request into a worker queue if a resource is unavailable. To maintain high performance and optimize scalability, the dispatcher can also drop incoming requests if the worker queues are full (we sacrifice availability in this case). 
 
-        \item \textbf{Workers and Workers Pool}
-
-        \item \textbf{Sensor (ScyllaDB)}
-
-        \item \textbf{PTT Server}
+        \item \textbf{Workers and Workers Pool}. The worker pool is a container in which we can find 6 workers. Each worker can send (asynchronous) requests to the different servers to obtain the data necessary to calculate the best environmentally friendly routes. Finally, each worker can also delegate the calculation of the route to the FPGA module.
         
-        \item \textbf{BRS Server}
+        Note that we follows the rule: one worker for each CPU core.\footnote{Source: \href{https://www.nginx.com/blog/inside-nginx-how-we-designed-for-performance-scale/}{Inside NGINX: How We Designed for Performance \& Scale}}
 
-        \item \textbf{FPGA}
+        \item \textbf{Sensor (ScyllaDB)}. It is the module that interacts with the database that contains the data of the transport lines. In order to have a high performance, we assume that the database is a \href{https://www.scylladb.com/product/technology/}{ScyllaDB} and this module can query this resource.
+
+        \item \textbf{PTT Server}. It is the module that interacts with the Public Transit Timetable Server. It can take the data from this resource. This module is an interface that allows to have a great generalization in order to implement as many services as we want. For example, we can easily implement ATM (Milan) or ATV (Verona).
+        
+        \item \textbf{BRS Server}. As a PTT server logic, this module can interact with the Bike/Ride Sharing server. This module is also a perfect generalization as a PTT server.
+
+        \item \textbf{FPGA}. This is the module that interfaces with the FPGA hardware. This hardware may be physically located in the server room or in a service such as Amazon's F1 EC2.
     \end{itemize}    
 
     \newpage
