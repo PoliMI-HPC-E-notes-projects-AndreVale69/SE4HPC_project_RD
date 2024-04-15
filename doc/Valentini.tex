@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v0.5.4}
+    \title{EcoRoute - v0.6.0}
     \date{Last update: \today}
     \maketitle
 
@@ -378,6 +378,17 @@
     \newpage
 
     \subsection{Sequence diagrams}
+
+    \begin{figure}[!htp]
+        \centering
+        \includegraphics[width=\textwidth]{img/sequence-diagram-1.pdf}
+    \end{figure}
+
+    % IDEA:
+    % 1. Client make a simple request with no constraints.
+    % 2. Client make a request with a constraint: he wants to use bike sharing and bus service.
+    % 3. Client make a request excluding a service, such as bike and car sharing. We give him the option but under the field "Do you search an other service?"
+    % 4. Extreme case: the each worker queue is full! Request denied.
 
     \newpage
 
