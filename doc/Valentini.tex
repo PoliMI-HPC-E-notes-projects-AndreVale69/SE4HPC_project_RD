@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v0.6.2}
+    \title{EcoRoute - v0.6.3}
     \date{Last update: \today}
     \maketitle
 
@@ -398,9 +398,39 @@
         \qrcode{https://polimi365-my.sharepoint.com/:b:/g/personal/11010856_polimi_it/ER3T5ta6paJJpGBJDbayMgYBvkYTWt7B42RLtGXA04h98g}
     \end{center}
 
+    \begin{enumerate}
+        \item A client requests the server to calculate the route. As a parameter, we pass the payload, a well-formatted package composed of the data inserted by the user.
+        
+        \item The Dispatcher enqueued the request to one of the six workers available.
+
+        \item The Dispatcher communicates to the client with a simple ack.
+        
+        \item The worker gets the request received from its queue.
+        
+        \item In Parallel (par), the worker queries the database containing the sensors' data.
+
+        \item The worker obtains the data about the occupancy rate from the DB.
+
+        \item The worker makes a query to the PTT Server with a start (time) and an end (time) to obtain the Public Transit Timetable (already filtered thanks to start/end time).
+
+        \item The worker obtains the PTT data from the PTT server.
+
+        \item The worker queries the BRS Server with the parameter equal to point 7.
+
+        \item The worker obtains the data about BRS from the BRS Server.
+
+        \item Finally, the worker can request the FPGA to calculate the route and some possible options. The function's argument is the data obtained previously and constraints (None by default).
+
+        \item The FPGA send the response to the worker.
+
+        \item The worker ends the sequence, sending the response (route) to the client.
+    \end{enumerate}
+    
     \newpage
 
     \subsubsection*{A request with constraints}
+
+    This sequence diagram (Figure~\ref{fig: Sequence Diagram: a request with constraints}) shows the client's request for a trip where he/she would use bike sharing and a public bus service.
 
     \begin{figure}[!htp]
         \centering
@@ -415,9 +445,24 @@
         \qrcode{https://polimi365-my.sharepoint.com/:b:/g/personal/11010856_polimi_it/EeT0Q3dzV9ZKioBK1JFMEUIBVzQJxoCDuD2FK1O7bV2Pig}
     \end{center}
 
+    \noindent
+    The flow is the same as the sequence diagram on page~\pageref{fig: Sequence Diagram: a simple request (no constraints)} (a simple request (with no constraints)), but in this case, the methods are different:
+    \begin{enumerate}
+        \setcounter{enumi}{4}
+        \item The worker makes a query to the DB to obtain only the occupancy rate of the buses.
+
+        \setcounter{enumi}{6}
+        \item The worker queries the PTT Server to obtain only the bus timetables.
+
+        \setcounter{enumi}{8}
+        \item The worker queries the BRS Server to obtain only the Bike sharing service.
+    \end{enumerate}
+
     \newpage
 
     \subsubsection*{A request excluding a service}
+
+    This sequence diagram (Figure~\ref{fig: Sequence Diagram: a request excluding a service}) shows the client's request for a trip where he/she excludes a service (Bike/Ride sharing).
 
     \begin{figure}[!htp]
         \centering
@@ -432,9 +477,14 @@
         \qrcode{https://polimi365-my.sharepoint.com/:b:/g/personal/11010856_polimi_it/EYhgWODRVwtCpyehn5ECWF0B71EfpRzaAVszWU_2gE4AVw}
     \end{center}
 
+    \noindent
+    The flow is the same as the sequence diagram on page~\pageref{fig: Sequence Diagram: a simple request (no constraints)} (a simple request (with no constraints)), but in this case, there aren't two phases (query to the BRS Server).
+
     \newpage
 
     \subsubsection*{Critical situation}
+
+    The following sequence diagram (Figure~\ref{fig: Sequence Diagram: critical situation}) shows a critical situation that can occur when all available workers have filled the queue. This is a very rare case, but we will discuss it in the next chapter~\ref{subsection: Critical points and design decisions} on page~\pageref{subsection: Critical points and design decisions}.
 
     \begin{figure}[!htp]
         \centering
@@ -448,7 +498,6 @@
     \begin{center}
         \qrcode{https://polimi365-my.sharepoint.com/:b:/g/personal/11010856_polimi_it/EdYSWWdXMMJArvTG57CmYWsB10MeP7QmCQnetx6rLMbNDw}
     \end{center}
-
 
     % IDEA:
     % 1. Client make a simple request with no constraints.
