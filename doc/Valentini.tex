@@ -508,4 +508,34 @@
     \newpage
 
     \subsection{Critical points and design decisions}\label{subsection: Critical points and design decisions}
+
+    \begin{itemize}
+        \item DESIGN DECISIONS:
+        \begin{itemize}
+            \item How do you have written this document? Solution: we have started from the use case (most general as possible and understandable by anyone [mainly the stakeholders]) to the sequence diagram (most specific and detailed, it also included name of the methods and its parameters!). So Use Case (understandable also by a kid / business model to present to stakeholders) and Sequence Diagram (used mainly by the engineers to understand the system under the hood).
+            
+            \item Why only one worker is linked to the resources? Solution: reliable choice, otherwise very complex graph.
+
+            \item Why do you have choose this architecture? (NGINX web server)
+
+            \item ScyllaDB is the db that takes data from sensors. Why?
+            
+            \item The user must choice one of the following constraints.
+
+            \item How FPGA calculate the route? Solution: Dijkstra algorithm.
+            
+            \item No account implemented and no assistance when you click on the button "calculate route". Why? SOlution: an account is not make sense and slow the system; the assistance is not required by the problem. The application could save the route in a dedicated session called "saved routes". Finally, the app is must to easy as possible, so...
+        \end{itemize}
+
+        \item CRITICAL POINTS:
+        \begin{itemize}
+            \item Sequence diagram: critical situation. What's happen if a worker can take the request? Solution: can be not considered because is too difficult.
+
+            \item High FPGA requests. Solution: cache and use Amazon (not physically the FPGA).
+            
+            \item High costs with FPGA. Solution: it depends by how much money we have. By the way, we can use solution as FaaS to host the NGINX server. But remember, an investment can be expensive at the start, but at the end... not. Also, the code is all into a service and completely yours.
+            
+            \item What's happen if all servers (or one of them) is unavailable? Solution: doesn't matter to the application, it calculates the route with the data that it has. If a service is unavailable, the client will be notified.
+        \end{itemize}
+    \end{itemize}
 \end{document}
