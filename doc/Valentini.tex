@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v0.5.3}
+    \title{EcoRoute - v0.5.4}
     \date{Last update: \today}
     \maketitle
 
@@ -344,14 +344,14 @@
     \noindent
     To view/download the Component Diagram in high quality, click or scan the QR code below:
     \begin{center}
-        \qrcode{https://polimi365-my.sharepoint.com/:b:/g/personal/11010856_polimi_it/EcxIGcUe12hDjiUMW3kyGpYBPMSZyWqOobHzbHKgKnZ1lA}
+        \qrcode{https://polimi365-my.sharepoint.com/:b:/g/personal/11010856_polimi_it/EecFf7fmu2FKp-33kGvRWRUB-9IOZYE1OLVhxTJCb7d91w}
     \end{center}
 
     \noindent
     Before we go into details, let us assume that sensors are deployed on public transport means and that they publish updated data on occupancy rates at each stop. The data are saved into a HPC database, such as \href{https://www.scylladb.com/}{ScyllaDB}. We have analyzed this assumption again in the section~\ref{subsection: Critical points and design decisions} on page~\pageref{subsection: Critical points and design decisions}.
 
     \highspace
-    It is also important to note that only one module (Worker) is connected to the Sensor, PTT Server and BRS Server. This is a design choice to avoid a less readable component diagram. We can imagine that each Worker is connected to Sensor, PTT Server and BRS Server.
+    (\textcolor{Red3}{\textbf{*}}) It is also important to note that only one module (Worker) is connected to the Sensor, PTT Server and BRS Server. This is a design choice to avoid a less readable component diagram. We can imagine that each Worker is connected to Sensor, PTT Server and BRS Server.
 
     \highspace
     The following list examines each component of the component diagram (Figure~\ref{fig: component diagram}):
@@ -372,7 +372,7 @@
         
         \item \textbf{BRS Server}. As a PTT server logic, this module can interact with the Bike/Ride Sharing server. This module is also a perfect generalization as a PTT server.
 
-        \item \textbf{FPGA}. This is the module that interfaces with the FPGA hardware. This hardware may be physically located in the server room or in a service such as Amazon's F1 EC2.
+        \item \textbf{FPGA}. This is the module that interfaces with the FPGA hardware. This hardware may be physically located in the server room or in a service such as \href{https://aws.amazon.com/ec2/instance-types/f1/}{Amazon F1 EC2}.
     \end{itemize}    
 
     \newpage
