@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v1.0.0}
+    \title{EcoRoute - v1.0.1}
     \date{Last update: \today}
     \maketitle
 
@@ -499,12 +499,6 @@
         \qrcode{https://polimi365-my.sharepoint.com/:b:/g/personal/11010856_polimi_it/EdYSWWdXMMJArvTG57CmYWsB10MeP7QmCQnetx6rLMbNDw}
     \end{center}
 
-    % IDEA:
-    % 1. Client make a simple request with no constraints.
-    % 2. Client make a request with a constraint: he wants to use bike sharing and bus service.
-    % 3. Client make a request excluding a service, such as bike and car sharing. We give him the option but under the field "Do you search an other service?"
-    % 4. Extreme case: the each worker queue is full! Request denied.
-
     \newpage
 
     \subsection{Critical points and design decisions}\label{subsection: Critical points and design decisions}
@@ -525,7 +519,7 @@
         
         \item \emph{Consider the Figure~\ref{fig: component diagram} on page~\pageref{fig: component diagram}. Why does only one Worker component have a link to Sensor, BRS Server, PTT Server and FPGA?}
         \begin{itemize}[label=\ding{45}]
-            \item As we say in that section, the reason concerns the legibility. If we had done a diagram with 24 (6 workers per 4 arrows), it would have been impossible to read.
+            \item As we say in that section, the reason concerns the legibility. If we had done a diagram with 24 arrows (6 workers per 4 arrows), it would have been impossible to read.
         \end{itemize}
 
         \item \emph{Why does the EcoRoute app have a Client-Server (worker pooling) architecture?}
