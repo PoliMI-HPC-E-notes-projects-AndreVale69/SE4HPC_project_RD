@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v0.6.1}
+    \title{EcoRoute - v0.6.2}
     \date{Last update: \today}
     \maketitle
 
@@ -379,27 +379,48 @@
 
     \subsection{Sequence diagrams}
 
+    The following section contains four sequence diagrams. The first three show how the architecture responds depending on the client's request (if there are constraints, etc.); the last one highlights a possible critical problem.
+
+    \subsubsection*{A simple request (no constraints)}
+
+    This sequence diagram (Figure 1) is the most common and perhaps the most used. It shows a classic interaction between the client and the architecture.
+
     \begin{figure}[!htp]
         \centering
         \includegraphics[width=\textwidth]{img/sequence-diagram-1.pdf}
+        \caption{Sequence Diagram: a simple request (no constraints).}
     \end{figure}
+
+    \newpage
+
+    \subsubsection*{A request with constraints}
 
     \begin{figure}[!htp]
         \centering
         \includegraphics[width=\textwidth]{img/sequence-diagram-2.pdf}
+        \caption{Sequence Diagram: a request with constraints.}
     \end{figure}
+
+    \newpage
+
+    \subsubsection*{A request excluding a service}
 
     \begin{figure}[!htp]
         \centering
         \includegraphics[width=\textwidth]{img/sequence-diagram-3.pdf}
+        \caption{Sequence Diagram: a request excluding a service.}
     \end{figure}
+
+    \newpage
+
+    \subsubsection*{Critical situation}
 
     \begin{figure}[!htp]
         \centering
         \includegraphics[width=\textwidth]{img/sequence-diagram-4.pdf}
+        \caption{Sequence Diagram: critical situation.}
     \end{figure}
 
-    
 
     % IDEA:
     % 1. Client make a simple request with no constraints.
