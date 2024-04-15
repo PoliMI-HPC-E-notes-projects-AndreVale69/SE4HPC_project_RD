@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v0.6.4}
+    \title{EcoRoute - v1.0.0}
     \date{Last update: \today}
     \maketitle
 
@@ -574,16 +574,48 @@
         \end{itemize}
     \end{itemize}
 
+    \newpage
+
     \subsubsection*{Critical Points}
 
-    \begin{itemize}
-        \item Sequence diagram: critical situation. What's happen if a worker can take the request? Solution: can be not considered because is too difficult.
+    \begin{itemize}[label=\ding{42}]
+        \item \emph{What happens if any \dquotes{Worker} has the queue full and cannot take any requests?}
+        \begin{itemize}[label=\ding{45}]
+            \item This critical point is infrequent. \href{https://www.nginx.com/blog/testing-the-performance-of-nginx-and-nginx-plus-web-servers/}{As the benchmarks show}, the number of requests solved is very high. This means that the chance that this problem occurs is tough. We can overlook this aspect.
+        \end{itemize}
 
-        \item High FPGA requests. Solution: cache and use Amazon (not physically the FPGA).
+        \item \emph{The algorithm is run in an FPGA. It makes sense, but what about the number of requests? If there are a lot, how can this hardware be managed?}
+        \begin{itemize}[label=\ding{45}]
+            \item The number of FPGAs depends on the number of active users. Also, it depends on the capital of the project. If it is very high, we can create a cluster of FPGA. Conversely, a helpful service such as the \href{https://aws.amazon.com/ec2/instance-types/f1/}{F1 instances of Amazon (EC2)} could be convenient. This consideration must be taken with pliers because, in this case, the algorithm and the data will pass through the Amazon service (not so private).
+            
+            We may need another document to analyze if creating an FPGA cluster or using Amazon is convenient.
+
+            The article \dquotes{\href{https://scholar.google.com/scholar?cluster=14234831352463010234&oi=gsb&hl=en&as_sdt=0,5}{\emph{Evaluation of an FPGA-Based Shortest-Path-Search Accelerator}}} by Y. Takei, M. Hariyama and M. Kameyama shows an interesting performance report about the FPGA and Dijkstra's algorithm:
+            \begin{table}[!htp]
+                \centering
+                \begin{tabular}{@{} c c c @{}}
+                    \toprule
+                    Input graph & FPGA (50MHz) & \href{https://ark.intel.com/content/www/us/en/ark/products/33924/intel-core-2-quad-processor-q9550-12m-cache-2-83-ghz-1333-mhz-fsb.html}{Core2 Quad (2.83GHz)} \\
+                    \midrule
+                    1024 Nodes, 3968 Edges & 9.38 & 16.00 \\
+                    4096 Nodes, 16130 Edges & 50.40 & 94.00 \\
+                    \bottomrule
+                \end{tabular}
+                \caption{Processing time (ms).\cite{takei2015evaluation}}
+            \end{table}       
+        \end{itemize}
+
+        \item \emph{The NGINX doesn't have high costs? Also, does each sensor push its data into a database, not increasing the costs?}
+        \begin{itemize}[label=\ding{45}]
+            \item Again, this depends on the capital of the project. If we need to reduce the costs, we can pass them on to FaaS (Function As A Service). It is a category of cloud computing services that provides a platform allowing customers to develop, run, and manage application functionalities without the complexity of building and maintaining the infrastructure typically associated with developing and launching an app.
+            
+            In this case, we pay only when the service will be used. We can several reduce the costs. For example, at night, no one should use the app (or fewer users).
+        \end{itemize}
         
-        \item High costs with FPGA. Solution: it depends by how much money we have. By the way, we can use solution as FaaS to host the NGINX server. But remember, an investment can be expensive at the start, but at the end... not. Also, the code is all into a service and completely yours.
-        
-        \item What's happen if all servers (or one of them) is unavailable? Solution: doesn't matter to the application, it calculates the route with the data that it has. If a service is unavailable, the client will be notified.
+        \item \emph{What happens if all servers (e.g. BRS Server) (or one of them) are unavailable?}
+        \begin{itemize}[label=\ding{45}]
+            \item It doesn't matter to the application; it calculates the route with its data. If a service is unavailable, the client will be notified.
+        \end{itemize}
     \end{itemize}
 
     \newpage
