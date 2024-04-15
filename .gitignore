@@ -2,3 +2,4 @@ resources/
 doc/*.*
 !doc/*.tex
 !doc/*.pdf
+!doc/*.bib

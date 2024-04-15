@@ -282,7 +282,7 @@
         
         \item \emph{The Citizens stakeholder interacts with the software system provided by the ECC through a mobile application (called EcoRoute).}
         
-        \item \emph{Citizens must have an internet connection to use the mobile application.}
+        \item \emph{Citizens need to have an internet connection to use the mobile application. The device used should also have GPS.}
     \end{itemize}
 
     \newpage
@@ -547,9 +547,31 @@
             \item The user can't write any constraint he wants. However, the application allows us to select which service they want. Therefore, it is possible to choose only bus rather than metro transportation. It's possible to select if we want to make a part of the route with a bike or car (carpooling). We also have a timeframe label that allows us to choose the start time of the trip and the end time. Finally, it's possible to customize the route by inserting an additional position that says to the algorithm, \dquotes{Calculate the route, but the journey must pass here}.
         \end{itemize}
 
-        \item How FPGA calculate the route? Solution: Dijkstra algorithm.
+        \item \emph{Why do you choose an FPGA to calculate the route? And how can It do that?}
+        \begin{itemize}[label=\ding{45}]
+            \item First, an FPGA (Field Programmable Gate Array) is a configurable integrated circuit that can be programmed or reprogrammed after manufacturing. FPGAs are commonly used in applications requiring flexibility, speed, and parallel processing capabilities, such as telecommunications, automotive, aerospace, and industrial sectors.
+            
+            We chose an FPGA because we want dedicated hardware that makes these calculations as fast as possible. The algorithm used by the FPGA is the classic Dijkstra. 
+            
+            For example, this is a possible architecture of the FPGA to run the Dijkstra's algorithm:
+            \begin{figure}[!htp]
+                \centering
+                \includegraphics[width=\textwidth]{img/FPGA-arch.pdf}
+                \caption{FPGA architecture.\cite{takei2015evaluation}}
+            \end{figure}
+        \end{itemize}
+
+        \newpage
         
-        \item No account implemented and no assistance when you click on the button "calculate route". Why? SOlution: an account is not make sense and slow the system; the assistance is not required by the problem. The application could save the route in a dedicated session called "saved routes". Finally, the app is must to easy as possible, so...
+        \item \emph{The app has no account management and no guidance once the user has obtained the route. The reason for this choice?}
+        \begin{itemize}[label=\ding{45}]
+            \item This app is not Google Maps. The main goal of this project is \dquotes{a comprehensive software system [...] as easy and efficient as possible}.
+            
+            An account is unnecessary, and this feature implies many consequences (how do we manage client's data? How do we protect the data?). Furthermore, registration could be tedious for the final user. And the performance side? You should save the research history into each account, so where should you put this data? This implies that we need another database.
+            This choice doesn't make sense because the ratio of costs/benefits needs to be equal. Finally, again, the core goal of the project is another. 
+            
+            Regarding the guidance, the app shows where you are with a GPS, so we can walk our path while watching the application.
+        \end{itemize}
     \end{itemize}
 
     \subsubsection*{Critical Points}
@@ -563,4 +585,13 @@
         
         \item What's happen if all servers (or one of them) is unavailable? Solution: doesn't matter to the application, it calculates the route with the data that it has. If a service is unavailable, the client will be notified.
     \end{itemize}
+
+    \newpage
+
+    \pagestyle{fancy}
+    \fancyhead{} % clear all header fields
+    \fancyhead[R]{\nouppercase{\leftmark}}
+
+    \bibliography{bibtex}{}
+    \bibliographystyle{plain}
 \end{document}
