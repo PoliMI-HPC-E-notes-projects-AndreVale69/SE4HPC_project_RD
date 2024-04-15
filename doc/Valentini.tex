@@ -90,7 +90,7 @@
 
 \begin{document}
     \author{Andrea Valentini}
-    \title{EcoRoute - v0.6.3}
+    \title{EcoRoute - v0.6.4}
     \date{Last update: \today}
     \maketitle
 
@@ -509,33 +509,58 @@
 
     \subsection{Critical points and design decisions}\label{subsection: Critical points and design decisions}
 
+    We have divided this section into design decisions and critical points.
+
+    \subsubsection*{Design Decisions}
+
+    \begin{itemize}[label=\ding{42}]
+        \item \emph{What is the structure of this document?}
+        \begin{itemize}[label=\ding{45}]
+            \item This document aims to satisfy all requests asked by the problem, but at the same time, it wants to start from a most general diagram (Use Case) and finish with a very detailed schema (Sequence Diagram). 
+
+            The initial part of the document should be understandable by any person because it would be very general. The public to which it is addressed is the stakeholders. So, it has a business form (we imagine presenting that schema to a stakeholder meeting).
+            
+            Finally, we propose a component diagram and sequence diagram. These schemas give engineers a general view of the project's structure. We imagine presenting those diagrams to the CTO (Chief Technology Officer).
+        \end{itemize}
+        
+        \item \emph{Consider the Figure~\ref{fig: component diagram} on page~\pageref{fig: component diagram}. Why does only one Worker component have a link to Sensor, BRS Server, PTT Server and FPGA?}
+        \begin{itemize}[label=\ding{45}]
+            \item As we say in that section, the reason concerns the legibility. If we had done a diagram with 24 (6 workers per 4 arrows), it would have been impossible to read.
+        \end{itemize}
+
+        \item \emph{Why does the EcoRoute app have a Client-Server (worker pooling) architecture?}
+        \begin{itemize}[label=\ding{45}]
+            \item Client-Server architecture is one of the most famous models for creating an application. Furthermore, the worker pooling technique offers us many benefits, such as high concurrency (e.g., during working hours when stakeholders search for how to move into the city). From a benchmark of the NGINX web server\footnote{Source: \href{https://www.nginx.com/blog/testing-the-performance-of-nginx-and-nginx-plus-web-servers/}{Testing the Performance of NGINX and NGINX Plus Web Servers}}, we can see that with 36 workers (cores), we can provide the service to almost one-third of Milan's population.
+        \end{itemize}
+
+        \item \emph{What is your assumption about the sensors? How do you get these data?}
+        \begin{itemize}[label=\ding{45}]
+            \item Each sensor is deployed by public transport. When public transport stops at the stop, the sensor sends the occupancy rate data to a database.
+            
+            In this project, we assume that the Database is a ScyllaDB because we need a DB architecture that handles millions of operations with very low latencies (single-digit milliseconds in this case!).
+            
+            We have considered other technologies, such as MongoDB, Cassandra, etc. However, we can see that ScyllaDB is unequal by studying the benchmarks.\footnote{Source: \href{https://www.scylladb.com/product/benchmarks/}{ScyllaDB Benchmarks}}
+        \end{itemize}
+        
+        \item \emph{What are the constraints for you?}
+        \begin{itemize}[label=\ding{45}]
+            \item The user can't write any constraint he wants. However, the application allows us to select which service they want. Therefore, it is possible to choose only bus rather than metro transportation. It's possible to select if we want to make a part of the route with a bike or car (carpooling). We also have a timeframe label that allows us to choose the start time of the trip and the end time. Finally, it's possible to customize the route by inserting an additional position that says to the algorithm, \dquotes{Calculate the route, but the journey must pass here}.
+        \end{itemize}
+
+        \item How FPGA calculate the route? Solution: Dijkstra algorithm.
+        
+        \item No account implemented and no assistance when you click on the button "calculate route". Why? SOlution: an account is not make sense and slow the system; the assistance is not required by the problem. The application could save the route in a dedicated session called "saved routes". Finally, the app is must to easy as possible, so...
+    \end{itemize}
+
+    \subsubsection*{Critical Points}
+
     \begin{itemize}
-        \item DESIGN DECISIONS:
-        \begin{itemize}
-            \item How do you have written this document? Solution: we have started from the use case (most general as possible and understandable by anyone [mainly the stakeholders]) to the sequence diagram (most specific and detailed, it also included name of the methods and its parameters!). So Use Case (understandable also by a kid / business model to present to stakeholders) and Sequence Diagram (used mainly by the engineers to understand the system under the hood).
-            
-            \item Why only one worker is linked to the resources? Solution: reliable choice, otherwise very complex graph.
+        \item Sequence diagram: critical situation. What's happen if a worker can take the request? Solution: can be not considered because is too difficult.
 
-            \item Why do you have choose this architecture? (NGINX web server)
-
-            \item ScyllaDB is the db that takes data from sensors. Why?
-            
-            \item The user must choice one of the following constraints.
-
-            \item How FPGA calculate the route? Solution: Dijkstra algorithm.
-            
-            \item No account implemented and no assistance when you click on the button "calculate route". Why? SOlution: an account is not make sense and slow the system; the assistance is not required by the problem. The application could save the route in a dedicated session called "saved routes". Finally, the app is must to easy as possible, so...
-        \end{itemize}
-
-        \item CRITICAL POINTS:
-        \begin{itemize}
-            \item Sequence diagram: critical situation. What's happen if a worker can take the request? Solution: can be not considered because is too difficult.
-
-            \item High FPGA requests. Solution: cache and use Amazon (not physically the FPGA).
-            
-            \item High costs with FPGA. Solution: it depends by how much money we have. By the way, we can use solution as FaaS to host the NGINX server. But remember, an investment can be expensive at the start, but at the end... not. Also, the code is all into a service and completely yours.
-            
-            \item What's happen if all servers (or one of them) is unavailable? Solution: doesn't matter to the application, it calculates the route with the data that it has. If a service is unavailable, the client will be notified.
-        \end{itemize}
+        \item High FPGA requests. Solution: cache and use Amazon (not physically the FPGA).
+        
+        \item High costs with FPGA. Solution: it depends by how much money we have. By the way, we can use solution as FaaS to host the NGINX server. But remember, an investment can be expensive at the start, but at the end... not. Also, the code is all into a service and completely yours.
+        
+        \item What's happen if all servers (or one of them) is unavailable? Solution: doesn't matter to the application, it calculates the route with the data that it has. If a service is unavailable, the client will be notified.
     \end{itemize}
 \end{document}
